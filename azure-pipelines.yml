@@ -2,32 +2,37 @@ trigger:
   - main  # change if your branch name is different
 
 pool:
-  name: Default   # IMPORTANT: use your self-hosted agent pool name
+  name: Default   # Self-hosted agent pool name
 
 steps:
   # --- Build React frontend ---
   - script: |
+      echo "=== Building React Frontend ==="
       cd frontend
       npm install
       npm run build
+      dir build || ls -la build
     displayName: 'Build React App'
+
+  # --- Publish React build (only if build folder exists) ---
+  - task: PublishBuildArtifacts@1
+    condition: succeeded()  # Only run if previous step succeeded
+    inputs:
+      PathtoPublish: '$(Build.SourcesDirectory)/frontend/build'
+      ArtifactName: 'react-build'
+    displayName: 'Publish React build artifact'
 
   # --- Build Node backend ---
   - script: |
+      echo "=== Building Node Backend ==="
       cd backend
       npm install
     displayName: 'Install Backend Dependencies'
 
-  # --- Publish frontend build ---
+  # --- Publish Node backend ---
   - task: PublishBuildArtifacts@1
+    condition: succeeded()
     inputs:
-      PathtoPublish: 'frontend/build'
-      ArtifactName: 'react-build'
-    displayName: 'Publish React build artifact'
-
-  # --- Publish backend ---
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: 'backend'
+      PathtoPublish: '$(Build.SourcesDirectory)/backend'
       ArtifactName: 'node-backend'
     displayName: 'Publish Node backend artifact'
