@@ -14,7 +14,7 @@ export default function BookingsPage() {
       return;
     }
 
-    axios.get('http://localhost:5000/api/bookings', {
+    axios.get('https://quiker-book.onrender.com/api/bookings', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => setBookings(res.data))

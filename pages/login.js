@@ -7,7 +7,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await axios.post('https://quiker-book.onrender.com/api/auth/login', { email, password });
       localStorage.setItem("token", res.data.token);
       alert("Login successful!");
       window.location.href = "/dashboard/services";
