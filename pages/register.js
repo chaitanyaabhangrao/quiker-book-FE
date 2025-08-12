@@ -8,7 +8,7 @@ export default function Register() {
 
   const handleRegister = async () => {
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
+      await axios.post('https://quiker-book.onrender.com/api/auth/register', { name, email, password });
       alert("Registration successful! Please login.");
       window.location.href = "/login";
     } catch (err) {

@@ -16,7 +16,7 @@ export default function TimeslotsPage() {
       return;
     }
 
-    axios.get('http://localhost:5000/api/timeslots', {
+    axios.get('https://quiker-book.onrender.com/api/timeslots', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => setTimeslots(res.data))
